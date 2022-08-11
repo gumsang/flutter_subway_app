@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'subway_model.dart';
 
 class SubwayApi {
-  SubwayApi() {
-    fetchSubway('');
-  }
+  // SubwayApi() {
+  //   fetchSubway('');
+  // }
   List<Subway> subwayList = [];
 
   Future<List<Subway>> getSubway(String query) async {

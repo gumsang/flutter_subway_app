@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_subway_api/debouncer.dart';
 import 'package:provider/provider.dart';
 
 import 'subway_api.dart';
@@ -24,6 +25,7 @@ class _SubwayScreenState extends State<SubwayScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<SubwayScreenViewModel>();
+    final debouncer = Debouncer(milliseconds: 1000);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,14 +35,19 @@ class _SubwayScreenState extends State<SubwayScreen> {
         children: [
           TextField(
             controller: _controller,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                debouncer
+                    .run(() => viewModel.fetchArrivalLists(_controller.text));
+              }
+            },
             decoration: InputDecoration(
               suffixIcon: GestureDetector(
                 onTap: () {
-                  if (_controller.text.isEmpty) {
-                  } else {
+                  if (_controller.text.isNotEmpty) {
                     viewModel.fetchArrivalLists(_controller.text);
                     _controller.clear();
-                  }
+                  } else {}
                 },
                 child: const Icon(Icons.search),
               ),
