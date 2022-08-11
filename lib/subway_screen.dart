@@ -33,14 +33,14 @@ class _SubwayScreenState extends State<SubwayScreen> {
         children: [
           TextField(
             controller: _controller,
-            onTap: () {
-              viewModel.fetchArrivalLists(_controller.text);
-            },
             decoration: InputDecoration(
               suffixIcon: GestureDetector(
                 onTap: () {
-                  viewModel.fetchArrivalLists(_controller.text);
-                  _controller.clear();
+                  if (_controller.text.isEmpty) {
+                  } else {
+                    viewModel.fetchArrivalLists(_controller.text);
+                    _controller.clear();
+                  }
                 },
                 child: const Icon(Icons.search),
               ),
