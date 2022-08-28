@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subway_api/debouncer.dart';
 import 'package:provider/provider.dart';
-import 'subway_model.dart';
+
+import '../../data/model/subway_model.dart';
 import 'subway_view_model.dart';
 
 class SubwayScreen extends StatefulWidget {
@@ -40,15 +41,23 @@ class _SubwayScreenState extends State<SubwayScreen> {
               }
             },
             decoration: InputDecoration(
-              suffixIcon: GestureDetector(
+              prefixIcon: GestureDetector(
                 onTap: () {
                   if (_controller.text.isNotEmpty) {
                     viewModel.fetchArrivalLists(_controller.text);
                     _controller.clear();
-                  } else {}
+                  }
                 },
                 child: const Icon(Icons.search),
               ),
+              suffixIcon: _controller.text.isEmpty
+                  ? null // Show nothing if the text field is empty
+                  : IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _controller.clear();
+                      },
+                    ),
             ),
           ),
           Expanded(

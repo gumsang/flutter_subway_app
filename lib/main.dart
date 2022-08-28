@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_subway_api/data/data_source/remote/subway_api_impl.dart';
 import 'package:provider/provider.dart';
 
-import 'subway_screen.dart';
-import 'subway_view_model.dart';
+import 'data/repository/subway_repository_impl.dart';
+import 'ui/main/subway_screen.dart';
+import 'ui/main/subway_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ChangeNotifierProvider(
-        create: (_) => SubwayScreenViewModel(),
+        create: (_) =>
+            SubwayScreenViewModel(SubwayRepositoryImpl(SubwayApiImpl())),
         child: const SubwayScreen(),
       ),
     );
