@@ -1,5 +1,6 @@
 import 'package:flutter_subway_api/data/data_source/remote/subway_api.dart';
 
+import '../data_source/remote/subway_dto.dart';
 import '../model/subway_model.dart';
 import 'subway_repository.dart';
 
@@ -9,12 +10,12 @@ class SubwayRepositoryImpl implements SubwayRepository {
 
   @override
   Future<List<Subway>> getSubwayArrival(String query) async {
-    Map<String, dynamic> json = await _api.getSubway(query);
-    if (json['realtimeArrivalList'] == null) {
+    SubwayDto subwayDto = await _api.getSubway(query);
+    if (subwayDto.realtimeArrivalList == null) {
       return List.empty();
     }
-    Iterable trainLineNm = json['realtimeArrivalList'];
-    return trainLineNm.map((e) => Subway.fromJson(e)).toList();
+    List<RealtimeArrivalList> trainLineNm = subwayDto.realtimeArrivalList!;
+    return trainLineNm.map((e) => Subway.fromJson(e.toJson())).toList();
   }
 
   Future<List<Subway>> fetchSubway(String inputText) async {

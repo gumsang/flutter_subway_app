@@ -1,3 +1,5 @@
+import 'package:flutter_subway_api/data/data_source/remote/subway_dto.dart';
+
 abstract class SubwayApi {
-  Future<Map<String, dynamic>> getSubway(String query);
+  Future<SubwayDto> getSubway(String query);
 }
